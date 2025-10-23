@@ -6,15 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO implements Serializable {
-    private String message;
-    private String description;
-    private int price;
+    private String restaurant;
+    private String courier;
+    private List<String> foods;
     private String status;
-
 }

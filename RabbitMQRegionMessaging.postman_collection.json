@@ -1,0 +1,150 @@
+{
+  "info": {
+    "_postman_id": "3d21b0d7-6d28-4ee8-8ae4-3efb64217f12",
+    "name": "RabbitMQ Region Messaging",
+    "description": "Collection for testing the Order Service publishing messages to RabbitMQ by region.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Order - Almaty",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{order-service-url}}/orders?region=almaty",
+          "host": [
+            "{{order-service-url}}"
+          ],
+          "path": [
+            "orders"
+          ],
+          "query": [
+            {
+              "key": "region",
+              "value": "almaty"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"restaurant\": \"Zhetysu Diner\",\n    \"courier\": \"Almaty Courier\",\n    \"foods\": [\"Plov\", \"Tea\"],\n    \"status\": \"New\"\n}"
+        },
+        "description": "Send an order intended for the Almaty region."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Order - Astana",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{order-service-url}}/orders?region=astana",
+          "host": [
+            "{{order-service-url}}"
+          ],
+          "path": [
+            "orders"
+          ],
+          "query": [
+            {
+              "key": "region",
+              "value": "astana"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"restaurant\": \"Baiterek Cafe\",\n    \"courier\": \"Astana Courier\",\n    \"foods\": [\"Beshbarmak\", \"Kumis\"],\n    \"status\": \"In progress\"\n}"
+        },
+        "description": "Send an order intended for the Astana region."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Order - Shymkent",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{order-service-url}}/orders?region=shymkent",
+          "host": [
+            "{{order-service-url}}"
+          ],
+          "path": [
+            "orders"
+          ],
+          "query": [
+            {
+              "key": "region",
+              "value": "shymkent"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"restaurant\": \"Shymkent Grill\",\n    \"courier\": \"Shymkent Courier\",\n    \"foods\": [\"Lagman\", \"Tea\"],\n    \"status\": \"New\"\n}"
+        },
+        "description": "Send an order intended for the Shymkent region."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Order - Unknown Region (Catch-all)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{order-service-url}}/orders?region=aktobe",
+          "host": [
+            "{{order-service-url}}"
+          ],
+          "path": [
+            "orders"
+          ],
+          "query": [
+            {
+              "key": "region",
+              "value": "aktobe"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"restaurant\": \"Western Eats\",\n    \"courier\": \"Aktobe Courier\",\n    \"foods\": [\"Manty\", \"Salad\"],\n    \"status\": \"New\"\n}"
+        },
+        "description": "Send an order for a region without a dedicated queue to confirm the catch-all listener receives it."
+      },
+      "response": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "order-service-url",
+      "value": "http://localhost:8000",
+      "type": "default"
+    }
+  ]
+}

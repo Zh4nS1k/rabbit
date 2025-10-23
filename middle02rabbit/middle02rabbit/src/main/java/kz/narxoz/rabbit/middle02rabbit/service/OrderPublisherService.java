@@ -3,9 +3,12 @@ package kz.narxoz.rabbit.middle02rabbit.service;
 import kz.narxoz.rabbit.middle02rabbit.dto.OrderDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.Locale;
 
 @Slf4j
 @Service
@@ -13,12 +16,16 @@ import org.springframework.stereotype.Service;
 public class OrderPublisherService {
 
     private final RabbitTemplate rabbitTemplate;
+    private final TopicExchange orderTopicExchange;
 
-    @Value("${mq.order.fanout.exchange}")
-    private String fanoutExchange;
+    public void sendOrderToRegion(OrderDTO orderDTO, String region) {
+        if (!StringUtils.hasText(region)) {
+            throw new IllegalArgumentException("Region must be provided");
+        }
 
-    public void sendOrderToAll(OrderDTO orderDTO){
-        rabbitTemplate.convertAndSend(fanoutExchange, "", orderDTO);
-        log.info("Order sent to all");
+        String normalizedRegion = region.trim().toLowerCase(Locale.ROOT);
+        String routingKey = "order." + normalizedRegion;
+        rabbitTemplate.convertAndSend(orderTopicExchange.getName(), routingKey, orderDTO);
+        log.info("Order sent to region {} with routing key {}", normalizedRegion, routingKey);
     }
 }
