@@ -106,6 +106,39 @@
       "response": []
     },
     {
+      "name": "Create Order - Force DLQ (Status ERROR)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{order-service-url}}/orders?region=almaty",
+          "host": [
+            "{{order-service-url}}"
+          ],
+          "path": [
+            "orders"
+          ],
+          "query": [
+            {
+              "key": "region",
+              "value": "almaty"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"restaurant\": \"Test DLQ Bistro\",\n    \"courier\": \"Courier Retry\",\n    \"foods\": [\"Samsa\", \"Tea\"],\n    \"status\": \"ERROR\"\n}"
+        },
+        "description": "Triggers listener failure (status=ERROR) to demonstrate retry and DLQ routing."
+      },
+      "response": []
+    },
+    {
       "name": "Create Order - Unknown Region (Catch-all)",
       "request": {
         "method": "POST",

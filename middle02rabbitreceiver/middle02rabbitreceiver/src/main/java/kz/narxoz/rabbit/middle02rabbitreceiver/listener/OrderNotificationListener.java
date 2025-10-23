@@ -43,5 +43,11 @@ public class OrderNotificationListener {
                 order.getCourier(),
                 order.getFoods(),
                 order.getStatus());
+
+        String status = order.getStatus();
+        if (status != null && "ERROR".equalsIgnoreCase(status)) {
+            log.warn("Simulating failure for order with status ERROR on queue {}", queueLabel);
+            throw new IllegalStateException("Processing failed for order with status ERROR");
+        }
     }
 }
